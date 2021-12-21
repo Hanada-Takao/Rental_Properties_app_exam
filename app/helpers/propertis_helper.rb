@@ -1,0 +1,2 @@
+module PropertisHelper
+end
