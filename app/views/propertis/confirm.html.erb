@@ -6,11 +6,10 @@
   <%= form.hidden_field :age_of_building %>
   <%= form.hidden_field :note %>
   <p>物件名:<%= @properti.properties_name %></p>
-  <p>賃料:<%= @properti.rent %></p>
+  <p>賃料:<%= @properti.rent %>円</p>
   <p>住所:<%= @properti.adress %></p>
-  <p>築年数:<%= @properti.age_of_building %></p>
+  <p>築年数:<%= @properti.age_of_building %>年</p>
   <p>備考:<%= @properti.note %></p>
-
   <%= form.submit  "登録する" %>
   <%= form.submit "戻る" %>
 <% end %>
