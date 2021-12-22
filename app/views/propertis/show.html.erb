@@ -1,7 +1,17 @@
 <h3>物件詳細</h3>
     <p>物件名：<%= @properti.properties_name %></p>
-    <p>賃料：<%= @properti.rent %></p>
+    <p>賃料：<%= @properti.rent %>円</p>
     <p>住所：<%= @properti.adress %></p>
-    <p>築年数：<%= @properti.age_of_building %></p>
+    <p>築年数：<%= @properti.age_of_building %>年</p>
     <p>備考：<%= @properti.note %></p>
-<%= link_to "新規物件登録", new_properti_path %>
+<hr>
+<h4>最寄り駅</h4>
+<% @nearest_stations.each do |nearest_station| %>
+  <% if @properti.nearest_stations.any? %>
+    <p>路線名：<%= nearest_station.route_name %></p>
+    <p>駅名：<%= nearest_station.satation_name %></p>
+    <p>徒歩分数：<%= nearest_station.walking_taime %>分</p>
+  <% end %>
+<% end %>
+<%= link_to "編集", edit_properti_path(@properti.id) %>
+<%= link_to "戻る", propertis_path %>

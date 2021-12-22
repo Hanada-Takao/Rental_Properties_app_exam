@@ -6,19 +6,25 @@ class PropertisController < ApplicationController
 
   def new
     @properti = Properti.new
+    2.times { @properti.nearest_stations.build }
   end
 
   def create
     @properti = Properti.new(properti_params)
-    if @properti.save
-      flash[:notice] = "物件を登録しました"
-      redirect_to propertis_path
-    else
+    if params[:back]
       render :new
+    else
+      if @properti.save
+        flash[:notice] = "物件を登録しました"
+        redirect_to propertis_path
+      else
+        render :new
+      end
     end
   end
 
   def show
+    @nearest_stations = @properti.nearest_stations
   end
 
   def edit
@@ -27,7 +33,7 @@ class PropertisController < ApplicationController
   def update
     if @properti.update(properti_params)
       flash[:notice] = "物件情報を編集しました"
-      redirect_to propertis_path
+        redirect_to propertis_path
     else
       render :edit
     end
@@ -39,6 +45,11 @@ class PropertisController < ApplicationController
     redirect_to propertis_path
   end
 
+  def confirm
+    @properti = Properti.new(properti_params)
+    render :new if @properti.invalid?
+  end
+
   private
   def properti_params
     params.require(:properti).permit(
@@ -46,7 +57,8 @@ class PropertisController < ApplicationController
       :rent,
       :adress,
       :age_of_building,
-      :note
+      :note,
+      nearest_stations_attributes: [:id, :route_name, :satation_name, :walking_taime ]
     )
   end
 
